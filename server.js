@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const MongoClient = require('mongodb').MongoClient
-const PORT = 2121
+const PORT = 42069
 require('dotenv').config()
 
 
@@ -17,14 +17,15 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
     
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
+//body parser
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
 app.get('/',async (request, response)=>{
-    const todoItems = await db.collection('shoppings').find().toArray()
+    const shoppingItems = await db.collection('shoppings').find().toArray()
     const itemsLeft = await db.collection('shoppings').countDocuments({completed: false})
-    response.render('index.ejs', { items: todoItems, left: itemsLeft })
+    response.render('index.ejs', { items: shoppingItems, left: itemsLeft })
     // db.collection('shoppings').find().toArray()
     // .then(data => {
     //     db.collection('shoppings').countDocuments({completed: false})
@@ -36,7 +37,7 @@ app.get('/',async (request, response)=>{
 })
 
 app.post('/addItem', (request, response) => {
-    db.collection('shoppings').insertOne({shoppingItem: request.body.todoItem, completed: false})
+    db.collection('shoppings').insertOne({shoppingItem: request.body.shopItem, completed: false})
     .then(result => {
         console.log('item added')
         response.redirect('/')

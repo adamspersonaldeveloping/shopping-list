@@ -22,7 +22,7 @@
 </head>
 <body>
     <h1>Shopping List </h1>
-    <ul class="todoItems">
+    <ul class="shoppingItems">
     <% for(let i=0; i < items.length; i++) {%>
         <li class="item">
             <% if(items[i].completed === true) {%>
@@ -40,7 +40,7 @@
     <h2>Add An Item:</h2>
 
     <form  action="/addItem" method="POST">
-        <input class="col-6" type="text" placeholder="Shopping Item" name="todoItem">
+        <input class="col-6" type="text" placeholder="Shopping Item" name="shopItem">
         <input class="button primary" type="submit">
     </form>
     
